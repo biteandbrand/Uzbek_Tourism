@@ -1,0 +1,8 @@
+# Flutter'ın önerdiği lint kuralları (yeni Flutter projelerinin varsayılanı).
+# Detay: https://dart.dev/tools/analysis  ve  package:flutter_lints
+include: package:flutter_lints/flutter.yaml
+
+# Proje özel kural ekley/çıkarımları buraya:
+# linter:
+#   rules:
+#     prefer_single_quotes: true

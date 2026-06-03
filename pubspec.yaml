@@ -1,0 +1,28 @@
+name: uzbek_tour_app
+description: Özbekistan turizm asistanı — QR ile sesli ve yazılı müze rehberi.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mobile_scanner: ^5.2.3      # QR / barkod okuma
+  just_audio: ^0.9.40         # sesli anlatım oynatma
+  http: ^1.2.2                # içerik API çağrıları
+  provider: ^6.1.2            # basit state / dil yönetimi
+  path_provider: ^2.1.4       # offline önbellek için yerel dizin
+  geolocator: ^13.0.1         # "yakınımdaki mekanlar" için konum
+  url_launcher: ^6.3.0        # mekanı harita uygulamasında açma
+  permission_handler: ^11.3.1 # izin reddinde ayarlara yönlendirme
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,23 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock        # uygulama değil prototip iskeleti; kilit dosyası izlenmiyor
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Platform scaffolding (flutter create . ile üretilir; hazır manifestler hariç)
+android/.gradle/
+android/local.properties
+ios/Pods/
+ios/.symlinks/
+.symlinks/
