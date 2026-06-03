@@ -63,6 +63,8 @@ class HomeScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
+              // value: reaktif (state'le güncellenir); initialValue tek seferlik.
+              // ignore: deprecated_member_use
               value: locale.langCode,
               decoration: const InputDecoration(border: OutlineInputBorder()),
               items: LocaleController.supported.entries
@@ -77,6 +79,7 @@ class HomeScreen extends StatelessWidget {
             Text(s.appLanguage, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
+              // ignore: deprecated_member_use
               value: context.watch<UiLocaleController>().override ?? 'auto',
               decoration: const InputDecoration(border: OutlineInputBorder()),
               items: [

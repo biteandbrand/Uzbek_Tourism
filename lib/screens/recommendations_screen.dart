@@ -124,6 +124,8 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
               child: DropdownButtonFormField<String>(
+                // value: şehir async dolduğundan reaktif kalmalı (initialValue değil).
+                // ignore: deprecated_member_use
                 value: _city,
                 decoration: InputDecoration(
                   labelText: s.cityLabel,
