@@ -6,9 +6,9 @@ ekrandan erişilebilir; en ayırt edici olan müze QR akışı uçtan uca kurulu
 
 ## Durum
 
-Prototip; çekirdek akışlar mock veriyle uçtan uca çalışır. **Henüz `flutter` ile
-derlenip/test edilmedi** (geliştirme ortamında Flutter SDK yoktu) — ilk işin
-`flutter pub get && flutter analyze && flutter test` ile doğrulama olmalı.
+Prototip; çekirdek akışlar mock veriyle uçtan uca çalışır. **CI yeşil** — her
+push/PR'da `flutter analyze` temiz geçer ve **tüm testler başarılı**. Gerçek
+cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
 
 **Hazır (✓)**
 - Dört özellik: müze QR → sesli/yazılı anlatım, rotalar, öneriler (şehre/konuma
@@ -20,7 +20,8 @@ derlenip/test edilmedi** (geliştirme ortamında Flutter SDK yoktu) — ilk işi
   fallback bilgisi.
 - Enjekte edilebilir, test edilebilir servisler (`http.Client` + soyut `OfflineStore`
   + konum alıcısı); ortak hata/boş/banner widget'ları; tek tema dosyası.
-- **10 test** (7 birim + 3 widget, eklenti-bağımsız), `flutter_lints`, GitHub Actions CI.
+- **11 test dosyası** (birim + 3 widget; eklenti-bağımsız), `flutter_lints`,
+  GitHub Actions CI (`analyze` + `test`, **yeşil**).
 - `docs/API.md` backend sözleşmesi + `tool/mock_server.dart` yerel sahte sunucu.
 
 **Açık / sonraki adımlar**
