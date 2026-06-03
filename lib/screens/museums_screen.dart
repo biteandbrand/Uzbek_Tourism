@@ -41,12 +41,14 @@ class _MuseumsScreenState extends State<MuseumsScreen> {
   }
 
   Future<void> _download(Museum m) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final s = context.stringsRead;
     try {
       await _offline.download(m.id);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.stringsRead.downloadFailed(e))));
+        messenger.showSnackBar(
+            SnackBar(content: Text(s.downloadFailed(e))));
       }
     }
   }
@@ -59,6 +61,7 @@ class _MuseumsScreenState extends State<MuseumsScreen> {
 
   Future<void> _delete(Museum m) async {
     final s = context.stringsRead;
+    final offline = _offline; // context.read'i await'ten önce al
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -73,7 +76,7 @@ class _MuseumsScreenState extends State<MuseumsScreen> {
         ],
       ),
     );
-    if (ok == true) await _offline.remove(m.id);
+    if (ok == true) await offline.remove(m.id);
   }
 
   void _onTapMuseum(Museum m) {

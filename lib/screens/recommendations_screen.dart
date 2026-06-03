@@ -79,12 +79,13 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
 
   /// Mekanı cihazın harita uygulamasında açar (konum sorgusuyla).
   Future<void> _openMap(TouristSite s) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final failMsg = context.stringsRead.mapOpenFailed;
     final uri = Uri.parse(
         'https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}');
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.stringsRead.mapOpenFailed)));
+      messenger.showSnackBar(SnackBar(content: Text(failMsg)));
     }
   }
 

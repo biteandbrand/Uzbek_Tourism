@@ -42,6 +42,10 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   /// hem de mock moddaki "simüle et" butonundan çağrılır.
   Future<void> _open(String exhibitId) async {
     if (_handling) return; // aynı kodu üst üste okumamak için
+    // context'e bağlı referanslar await'ten önce alınır (lint-temiz).
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final strings = context.stringsRead;
     setState(() => _handling = true);
     try {
       final exhibit = await _service.getExhibit(exhibitId);
@@ -54,13 +58,12 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
         final proceed = await _confirmWrongMuseum();
         if (proceed != true || !mounted) return;
       }
-      await Navigator.of(context).push(MaterialPageRoute(
+      await navigator.push(MaterialPageRoute(
         builder: (_) => ExhibitDetailScreen(exhibit: exhibit),
       ));
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.stringsRead.error(e))));
+        messenger.showSnackBar(SnackBar(content: Text(strings.error(e))));
       }
     } finally {
       if (mounted) setState(() => _handling = false);
