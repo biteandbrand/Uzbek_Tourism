@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
     final offlineCount = context.watch<OfflineController>().count;
     return Scaffold(
       appBar: AppBar(title: Text(s.appTitle)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
