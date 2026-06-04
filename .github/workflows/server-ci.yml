@@ -1,6 +1,7 @@
 name: Server CI
 
 on:
+  workflow_dispatch:        # Actions sekmesinden elle çalıştırılabilir
   push:
     branches: [main]
     paths:
