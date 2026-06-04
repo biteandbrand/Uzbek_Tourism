@@ -93,3 +93,87 @@ CREATE TABLE IF NOT EXISTS route_stop (
     UNIQUE (route_id, ord)
 );
 CREATE INDEX IF NOT EXISTS idx_route_stop_route ON route_stop(route_id);
+
+-- =====================================================================
+-- ÖRNEK VERİ (seed) — mock_data.dart ile aynı içerik.
+-- Idempotent: sabit UUID'ler + ON CONFLICT DO NOTHING (tekrar uygulanabilir).
+-- Prod'da istenmezse bu bölüm silinebilir.
+-- =====================================================================
+
+INSERT INTO language (code, name) VALUES
+    ('uz', 'Oʻzbekcha'),
+    ('ru', 'Русский'),
+    ('en', 'English'),
+    ('zh', '中文'),
+    ('tr', 'Türkçe')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO museum (id, name, city, lat, lng) VALUES
+    ('11111111-0000-0000-0000-000000000001', 'Afrasiyab Müzesi', 'Samarkand', 39.6650, 66.9750),
+    ('11111111-0000-0000-0000-000000000002', 'Buhara Devlet Müzesi', 'Bukhara', 39.7747, 64.4286),
+    ('11111111-0000-0000-0000-000000000003', 'Uygulamalı Sanatlar Müzesi', 'Tashkent', 41.2995, 69.2401),
+    ('11111111-0000-0000-0000-000000000004', 'Hiva İçan Kale Müzesi', 'Khiva', 41.3783, 60.3639)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO exhibit (id, museum_id, type, position) VALUES
+    ('22222222-0000-0000-0000-000000000001',
+     '11111111-0000-0000-0000-000000000001', 'object', 'Salon 2, vitrin 4')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO translation (id, exhibit_id, lang_code, title, body) VALUES
+    ('33333333-0000-0000-0000-000000000001',
+     '22222222-0000-0000-0000-000000000001', 'tr',
+     'Uluğ Bey Astronomi Tableti',
+     'Semerkant''taki Uluğ Bey Rasathanesi''nden bir gök gözlem tableti. 15. yüzyılda yıldız konumlarının şaşırtıcı bir doğrulukla ölçüldüğü dönemi temsil eder.'),
+    ('33333333-0000-0000-0000-000000000002',
+     '22222222-0000-0000-0000-000000000001', 'en',
+     'Ulugh Beg Astronomy Tablet',
+     'A celestial observation tablet from the Ulugh Beg Observatory in Samarkand, marking the 15th-century era when star positions were measured with remarkable accuracy.'),
+    ('33333333-0000-0000-0000-000000000003',
+     '22222222-0000-0000-0000-000000000001', 'uz',
+     'Ulugʻbek astronomiya plitasi',
+     'Samarqanddagi Ulugʻbek rasadxonasidan osmon kuzatuv plitasi. 15-asrda yulduzlar oʻrni ajoyib aniqlik bilan oʻlchangan davrni aks ettiradi.')
+ON CONFLICT (exhibit_id, lang_code) DO NOTHING;
+
+INSERT INTO audio_asset (id, translation_id, url, duration_sec, tts_voice) VALUES
+    ('44444444-0000-0000-0000-000000000001',
+     '33333333-0000-0000-0000-000000000001',
+     'https://download.samplelib.com/mp3/sample-9s.mp3', 9, 'sample'),
+    ('44444444-0000-0000-0000-000000000002',
+     '33333333-0000-0000-0000-000000000002',
+     'https://download.samplelib.com/mp3/sample-9s.mp3', 9, 'sample')
+ON CONFLICT (translation_id) DO NOTHING;
+
+INSERT INTO tourist_site (id, city, name, lat, lng, category) VALUES
+    ('55555555-0000-0000-0000-000000000001', 'Samarkand', 'Registan Meydanı', 39.6547, 66.9758, 'square'),
+    ('55555555-0000-0000-0000-000000000002', 'Samarkand', 'Gur-i Emir Türbesi', 39.6486, 66.9690, 'mausoleum'),
+    ('55555555-0000-0000-0000-000000000003', 'Samarkand', 'Bibi Hanım Camii', 39.6606, 66.9817, 'mosque'),
+    ('55555555-0000-0000-0000-000000000004', 'Bukhara', 'Po-i Kalan Külliyesi', 39.7756, 64.4143, 'mosque'),
+    ('55555555-0000-0000-0000-000000000005', 'Bukhara', 'Lyab-i Hauz', 39.7747, 64.4194, 'square'),
+    ('55555555-0000-0000-0000-000000000006', 'Tashkent', 'Çorsu Pazarı', 41.3262, 69.2348, 'bazaar'),
+    ('55555555-0000-0000-0000-000000000007', 'Khiva', 'İçan Kale', 41.3783, 60.3639, 'madrasah')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO route (id, name, summary) VALUES
+    ('66666666-0000-0000-0000-000000000001', 'Klasik İpek Yolu — 4 gün',
+     'Taşkent → Semerkant → Buhara → Hiva ana hattı.'),
+    ('66666666-0000-0000-0000-000000000002', 'Semerkant kısa molası — 1 gün',
+     'Tek günde Semerkant''ın öne çıkan üç anıtı.')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO route_stop (id, route_id, ord, city, title, description, duration_label) VALUES
+    ('77777777-0000-0000-0000-000000000001', '66666666-0000-0000-0000-000000000001', 0,
+     'Tashkent', 'Taşkent''te varış', 'Çorsu Pazarı ve eski şehirde ilk gün. Akşam hızlı tren bileti.', '1 gün'),
+    ('77777777-0000-0000-0000-000000000002', '66666666-0000-0000-0000-000000000001', 1,
+     'Samarkand', 'Semerkant''ın anıtları', 'Registan, Gur-i Emir ve Bibi Hanım. QR rehberiyle müze turu.', '1,5 gün'),
+    ('77777777-0000-0000-0000-000000000003', '66666666-0000-0000-0000-000000000001', 2,
+     'Bukhara', 'Buhara''nın eski şehri', 'Po-i Kalan ve Lyab-i Hauz çevresinde yürüyüş.', '1 gün'),
+    ('77777777-0000-0000-0000-000000000004', '66666666-0000-0000-0000-000000000001', 3,
+     'Khiva', 'Hiva — İçan Kale', 'Surlarla çevrili müze-şehirde kapanış.', 'Yarım gün'),
+    ('77777777-0000-0000-0000-000000000005', '66666666-0000-0000-0000-000000000002', 0,
+     'Samarkand', 'Registan Meydanı', 'Üç medreseyle çevrili tarihi meydan.', '2 saat'),
+    ('77777777-0000-0000-0000-000000000006', '66666666-0000-0000-0000-000000000002', 1,
+     'Samarkand', 'Gur-i Emir', 'Timur''un türbesi.', '1 saat'),
+    ('77777777-0000-0000-0000-000000000007', '66666666-0000-0000-0000-000000000002', 2,
+     'Samarkand', 'Bibi Hanım Camii', 'Dönemin en büyük camilerinden.', '1 saat')
+ON CONFLICT (route_id, ord) DO NOTHING;

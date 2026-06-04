@@ -50,8 +50,10 @@ flutter run --dart-define=USE_MOCK=false --dart-define=API_BASE=http://10.0.2.2:
 # (iOS simülatöründe API_BASE=http://localhost:8080)
 ```
 
-> Veri girmeden tablolar boş döner. Örnek içerik eklemek için `schema.sql`'e
-> uygun INSERT'ler kullanın ya da `tool/mock_server.dart`'taki örnekleri temel alın.
+> `schema.sql` idempotent **örnek veri** de içerir (mock_data.dart ile aynı:
+> müzeler, demo exhibit + çeviriler/ses, mekanlar, rotalar). Bu yüzden migration
+> sonrası uç noktalar boş değil, dolu döner. Prod'da istemezseniz `schema.sql`'in
+> "ÖRNEK VERİ (seed)" bölümünü silin.
 
 ## Test ve analiz
 
