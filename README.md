@@ -6,9 +6,17 @@ ekrandan erişilebilir; en ayırt edici olan müze QR akışı uçtan uca kurulu
 
 ## Durum
 
-Prototip; çekirdek akışlar mock veriyle uçtan uca çalışır. **CI yeşil** — her
-push/PR'da `flutter analyze` temiz geçer ve **tüm testler başarılı**. Gerçek
-cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
+**Sunuma hazır prototip.** Kod tarafı (uygulama + backend) tamamlandı; çekirdek
+akışlar mock veriyle uçtan uca çalışır ve **her iki CI da yeşil** (`flutter
+analyze`/`flutter test` ve `dart analyze`/`dart test`). Özbekistan Turizm
+Bakanlığı sunumu için yeterli olgunlukta; onay sonrası kalan **paketleme/dağıtım**
+adımları tamamlanacaktır.
+
+> **Not (dürüst kapsam):** Repo henüz _derlenebilir_ bir Flutter projesi değildir
+> — `android/`/`ios/` altında yalnızca elle yazılmış izin dosyaları (manifest +
+> Info.plist) vardır. Gerçek bir APK/IPA almadan önce **tek seferlik kurulum**
+> gerekir: `flutter create .` (platform iskeleti) → uygulama kimliği/ikon/ad →
+> Android keystore & iOS imzalama. Ayrıntı "Açık / sonraki adımlar"da.
 
 **Hazır (✓)**
 - Dört özellik: müze QR → sesli/yazılı anlatım, rotalar, öneriler (şehre/konuma
@@ -29,12 +37,23 @@ cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
   testleri, sahte DB ile). App `--dart-define=USE_MOCK=false --dart-define=API_BASE=...`
   ile bağlanır. Ayrıntı: `server/README.md`.
 
-**Açık / sonraki adımlar**
-- Backend'i canlıya alma (insan adımları): Railway + managed Postgres, R2 bucket,
-  TTS hesabı, ortam değişkenleri — `server/README.md` RUNBOOK'unda madde madde.
-- `flutter create .` ile platform iskeleti, ardından gerçek cihaz/emülatörde
-  uçtan uca deneme (kamera, ses, konum, harita izinleri).
-- uz/ru/zh **arayüz** çevirileri (gerçek çevirmenle; altyapı hazır).
+**Açık / sonraki adımlar** (sunum onayı sonrası — kod tarafı bitti)
+
+_Paketleme (tek seferlik, çoğu hızlı):_
+- `flutter create .` → `android/` + `ios/` platform iskeleti (mevcut izin
+  dosyalarının üzerine yazmaz).
+- Android: `minSdkVersion 21`; iOS: dağıtım hedefi 12.0+, `permission_handler`
+  için Podfile makrosu (`PERMISSION_CAMERA=1`), `pod install`.
+- Uygulama kimliği (bundle id / applicationId), uygulama adı, **ikon**, açılış ekranı.
+- Gerçek cihaz/emülatörde uçtan uca deneme (kamera, ses, konum, harita).
+
+_Hesap/secret gerektiren (insan adımları):_
+- Android release **keystore** + iOS **imzalama** (Apple Developer hesabı) → store/TestFlight.
+- Backend'i canlıya alma: Railway + managed Postgres, R2 bucket, TTS hesabı,
+  ortam değişkenleri — `server/README.md` RUNBOOK'unda madde madde.
+
+_Opsiyonel:_
+- uz/ru/zh **arayüz** çevirileri (gerçek çevirmenle; altyapı + içerik-fallback hazır).
 
 ## Proje yapısı
 
