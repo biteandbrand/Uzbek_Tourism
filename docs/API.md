@@ -138,8 +138,9 @@ Hazır gezi rotaları. İstemci: `DiscoveryService.routes`.
 | `/museums`          | `museum`                                         |
 | `/sites`            | `tourist_site`                                   |
 | `/cities`           | `DISTINCT tourist_site.city` (veya `museum.city`)|
-| `/routes`           | (öneri) `route` + `route_stop` — şemaya eklenebilir |
+| `/routes`           | `route` + `route_stop` (ord'a göre sıralı)       |
 
-> `route`/`route_stop` tabloları şu an `schema.sql`'de yok; rotalar prototipte
-> `mock_data.dart`'tan gelir. Gerçek backend'de `route(id, name, summary)` ve
-> `route_stop(route_id, ord, city, title, description, duration_label)` olarak eklenebilir.
+> `route(id, name, summary)` ve `route_stop(route_id, ord, city, title,
+> description, duration_label)` tabloları `schema.sql`'e eklendi. `/routes`
+> yanıtındaki `stops` dizisi `route_stop`'tan `ord` sırasına göre üretilir.
+> Prototipte rotalar hâlâ `mock_data.dart`'tan gelir (`kUseMock = true`).

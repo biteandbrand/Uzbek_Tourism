@@ -71,3 +71,24 @@ CREATE TABLE tourist_site (
     category    TEXT                         -- 'mosque', 'mausoleum', 'bazaar', ...
 );
 CREATE INDEX idx_site_city ON tourist_site(city);
+
+-- Hazır gezi rotaları (GET /routes). RoutePlan modelinin karşılığı.
+CREATE TABLE route (
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name        TEXT NOT NULL,               -- 'Klasik İpek Yolu — 4 gün'
+    summary     TEXT NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Bir rotanın sıralı durakları. RouteStop modelinin karşılığı.
+CREATE TABLE route_stop (
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    route_id        UUID NOT NULL REFERENCES route(id) ON DELETE CASCADE,
+    ord             INTEGER NOT NULL,        -- duraklar arası sıra (0,1,2,...)
+    city            TEXT NOT NULL,           -- 'Samarkand', 'Bukhara', ...
+    title           TEXT NOT NULL,
+    description     TEXT NOT NULL,
+    duration_label  TEXT,                    -- 'Yarım gün', '2 saat' (opsiyonel)
+    UNIQUE (route_id, ord)
+);
+CREATE INDEX idx_route_stop_route ON route_stop(route_id);

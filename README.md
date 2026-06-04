@@ -29,7 +29,6 @@ cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
   uçtan uca deneme (kamera, ses, konum, harita izinleri).
 - Gerçek backend (`docs/API.md` sözleşmesine göre); `kUseMock=false` + `kApiBase`.
 - uz/ru/zh **arayüz** çevirileri (gerçek çevirmenle; altyapı hazır).
-- `route`/`route_stop` tablolarını `schema.sql`'e ekleme.
 
 ## Proje yapısı
 
