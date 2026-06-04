@@ -70,7 +70,7 @@ flutter run --dart-define=USE_MOCK=false --dart-define=API_BASE=http://10.0.2.2:
 cd server
 dart pub get
 dart analyze
-dart test          # repository'yi sahte DB ile test eder (Postgres gerekmez)
+dart test          # repository + middleware + sözleşme testleri (Postgres gerekmez)
 ```
 
 ---

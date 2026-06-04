@@ -128,6 +128,9 @@ flutter test
 - `test/exhibit_test.dart` — `Exhibit.localizedWith` (geri-dönüş bayrağı dahil).
 - `test/recommendations_screen_test.dart` — widget testi: şehir modu mock
   mekanları listeler, şehir değişimi yansır (eklenti gerektirmez).
+- `test/api_contract_test.dart` — `lib/mock_api.dart` yanıtlarının docs/API.md
+  şekline uyduğunu doğrular; `server/test/contract_test.dart` ile **aynı**
+  sözleşmeye karşı (mock ↔ gerçek backend şekil özdeşliği).
 
 Lint: `analysis_options.yaml` `package:flutter_lints/flutter.yaml`'ı içerir.
 
