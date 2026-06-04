@@ -23,11 +23,16 @@ cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
 - **11 test dosyası** (birim + 3 widget; eklenti-bağımsız), `flutter_lints`,
   GitHub Actions CI (`analyze` + `test`, **yeşil**).
 - `docs/API.md` backend sözleşmesi + `tool/mock_server.dart` yerel sahte sunucu.
+- **Backend** (`server/`): Dart + shelf API'si, Postgres'ten `docs/API.md`
+  uç noktalarını sunar; idempotent migration, TTS→R2 ingestion, Railway deploy
+  yapılandırması ve RUNBOOK. App `--dart-define=USE_MOCK=false --dart-define=API_BASE=...`
+  ile bağlanır. Ayrıntı: `server/README.md`.
 
 **Açık / sonraki adımlar**
+- Backend'i canlıya alma (insan adımları): Railway + managed Postgres, R2 bucket,
+  TTS hesabı, ortam değişkenleri — `server/README.md` RUNBOOK'unda madde madde.
 - `flutter create .` ile platform iskeleti, ardından gerçek cihaz/emülatörde
   uçtan uca deneme (kamera, ses, konum, harita izinleri).
-- Gerçek backend (`docs/API.md` sözleşmesine göre); `kUseMock=false` + `kApiBase`.
 - uz/ru/zh **arayüz** çevirileri (gerçek çevirmenle; altyapı hazır).
 
 ## Proje yapısı

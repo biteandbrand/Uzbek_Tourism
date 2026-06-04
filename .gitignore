@@ -6,6 +6,11 @@ build/
 .flutter-plugins-dependencies
 pubspec.lock        # uygulama değil prototip iskeleti; kilit dosyası izlenmiyor
 
+# Secrets
+.env
+*.env
+!*.env.example
+
 # IDE
 .idea/
 .vscode/
