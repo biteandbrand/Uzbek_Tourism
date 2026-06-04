@@ -24,9 +24,18 @@ server/
 
 ## Uç noktalar
 
-`GET /healthz`, `/museums`, `/museums/{id}/exhibits`, `/exhibits/{id}`,
-`/sites`, `/sites?city=`, `/cities`, `/routes` — yanıt şekilleri `docs/API.md`
-ile birebir (Flutter parsing'i değişmez).
+`GET /museums`, `/museums/{id}/exhibits`, `/exhibits/{id}`, `/sites`,
+`/sites?city=`, `/cities`, `/routes` — yanıt şekilleri `docs/API.md` ile birebir
+(Flutter parsing'i değişmez).
+
+Sağlık & koruma:
+- `GET /healthz` — liveness (DB'ye dokunmaz).
+- `GET /readyz` — readiness; DB'ye `SELECT 1` atar, erişilemezse 503.
+- **CORS** — tüm yanıtlarda; `CORS_ORIGIN` ile kısıtlanabilir (varsayılan `*`).
+  Preflight `OPTIONS` doğrudan yanıtlanır.
+- **Rate-limit** — IP başına sabit pencere; varsayılan 60 istek / 60 sn
+  (`RATE_LIMIT`, `RATE_WINDOW_SEC`). Aşılırsa `429`. Proxy arkasında
+  `X-Forwarded-For` kullanılır.
 
 ## Yerelde çalıştırma
 

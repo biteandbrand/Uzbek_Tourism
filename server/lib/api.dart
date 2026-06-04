@@ -14,7 +14,18 @@ Response _json(Object? data, {int status = 200}) => Response(
 Handler buildApi(Repository repo) {
   final router = Router();
 
+  // Liveness: süreç ayakta mı (DB'ye dokunmaz).
   router.get('/healthz', (Request r) => _json({'status': 'ok'}));
+
+  // Readiness: DB'ye erişilebiliyor mu.
+  router.get('/readyz', (Request r) async {
+    try {
+      await repo.db.query('SELECT 1');
+      return _json({'status': 'ready'});
+    } catch (_) {
+      return _json({'status': 'unavailable'}, status: 503);
+    }
+  });
 
   router.get('/museums', (Request r) async => _json(await repo.museums()));
 

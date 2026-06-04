@@ -18,4 +18,14 @@ class Env {
   static int get port => int.tryParse(maybe('PORT') ?? '') ?? 8080;
   static String get databaseUrl => require('DATABASE_URL');
   static String? get adminToken => maybe('ADMIN_TOKEN');
+
+  /// CORS izin verilen origin (varsayılan herkese açık API).
+  static String get corsOrigin => maybe('CORS_ORIGIN') ?? '*';
+
+  /// Pencere başına izin verilen istek sayısı.
+  static int get rateLimitMax => int.tryParse(maybe('RATE_LIMIT') ?? '') ?? 60;
+
+  /// Rate-limit penceresi (saniye).
+  static int get rateWindowSec =>
+      int.tryParse(maybe('RATE_WINDOW_SEC') ?? '') ?? 60;
 }
