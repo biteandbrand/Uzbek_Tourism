@@ -25,7 +25,8 @@ cihazda denemek için aşağıdaki "Platform kurulumu" adımlarını izleyin.
 - `docs/API.md` backend sözleşmesi + `tool/mock_server.dart` yerel sahte sunucu.
 - **Backend** (`server/`): Dart + shelf API'si, Postgres'ten `docs/API.md`
   uç noktalarını sunar; idempotent migration, TTS→R2 ingestion, Railway deploy
-  yapılandırması ve RUNBOOK. App `--dart-define=USE_MOCK=false --dart-define=API_BASE=...`
+  yapılandırması ve RUNBOOK. **Server CI yeşil** (`dart analyze` + repository
+  testleri, sahte DB ile). App `--dart-define=USE_MOCK=false --dart-define=API_BASE=...`
   ile bağlanır. Ayrıntı: `server/README.md`.
 
 **Açık / sonraki adımlar**
