@@ -2,6 +2,12 @@
 # Detay: https://dart.dev/tools/analysis  ve  package:flutter_lints
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    # server/ ayrı bir Dart paketidir (kendi pubspec'i + Server CI'ı vardır);
+    # kök `flutter analyze` onu taramamalı (bağımlılıkları burada kurulu değil).
+    - server/**
+
 # Proje özel kural ekley/çıkarımları buraya:
 # linter:
 #   rules:
